@@ -1,801 +1,611 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Dental Care</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DevWalks — Walk On Air</title>
+<meta name="description" content="DevWalks — premium sneakers engineered for comfort. Explore in 3D and order in seconds.">
+<meta name="theme-color" content="#07070c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+@property --accent{syntax:'<color>';inherits:true;initial-value:#ff5a1f}
+:root{
+  --bg:#07070c;--ink:#f4efe6;--muted:#a29fb0;--line:rgba(255,255,255,.09);--glass:rgba(16,16,26,.55);
+  --accent:#ff5a1f;--gold:#ffb547;--violet:#7b5cff;
+  --fd:'Syne',sans-serif;--fb:'Inter',system-ui,sans-serif;
+  --pad:clamp(20px,6vw,96px);--r:24px;--ease:cubic-bezier(.16,1,.3,1);
+  transition:--accent 1s var(--ease);
+}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.5}
+body.loading{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit;background:none;border:0;outline:0}
+button{cursor:pointer}
+::selection{background:var(--accent);color:#0b0b10}
+em{font-style:normal;color:var(--accent)}
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    },
-                    colors: {
-                        navy: {
-                            900: '#111836',
-                            800: '#1a2347',
-                        },
-                        brand: {
-                            blue: '#e0e7ff',
-                            dark: '#0f172a'
-                        }
-                    },
-                    animation: {
-                        'spin-slow': 'spin 12s linear infinite',
-                    }
-                }
-            }
-        }
-    </script>
+/* ---------- atmosphere ---------- */
+.aura{position:fixed;inset:-10%;z-index:0;pointer-events:none;
+  background:radial-gradient(38% 34% at 72% 34%,color-mix(in srgb,var(--accent) 38%,transparent),transparent 70%),
+             radial-gradient(30% 30% at 12% 85%,rgba(123,92,255,.22),transparent 70%),
+             radial-gradient(70% 60% at 50% 40%,#12121d,var(--bg));
+  animation:drift 16s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(-3%,2%,0) scale(1.06)}}
+#webgl{position:fixed;inset:0;width:100vw;height:100vh;z-index:1;pointer-events:none}
+.grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.07;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+main{position:relative;z-index:2}
+section{position:relative;min-height:100vh;padding:0 var(--pad)}
+.eyebrow{font-size:.78rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:1.2rem}
+h1,h2,h3,.logo{font-family:var(--fd);letter-spacing:-.03em;line-height:.92}
+h2{font-size:clamp(2.6rem,6.5vw,6rem);font-weight:800}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+.w>span{display:inline-block;will-change:transform}
+.glass{background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);border-radius:var(--r)}
 
-    <style>
-        html { 
-            scroll-behavior: smooth; 
-            background-color: #f8fafc; 
-        }
-        body { 
-            background-color: #f8fafc; 
-            color: #0f172a; 
-            overflow-x: hidden; 
-        }
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:.6rem;padding:1rem 1.7rem;border-radius:100px;background:var(--accent);color:#0b0b10;font-weight:600;font-size:.95rem;box-shadow:0 10px 40px -10px var(--accent);transition:filter .3s;white-space:nowrap}
+.btn:hover{filter:brightness(1.12)}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+.btn-sm{padding:.7rem 1.2rem;font-size:.85rem}
+.btn-xl{padding:1.4rem 2.6rem;font-size:1.15rem}
+.chip{padding:.6rem 1rem;border-radius:100px;border:1px solid var(--line);font-size:.85rem;transition:.3s}
+.chip.on,.chip:hover{border-color:var(--accent);color:var(--accent)}
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+/* ---------- preloader ---------- */
+.preloader{position:fixed;inset:0;z-index:100;background:#07070c;display:grid;place-items:center;clip-path:inset(0 0 0 0)}
+.pl-inner{width:min(420px,80vw)}
+.pl-logo{font-family:var(--fd);font-weight:800;font-size:clamp(2rem,6vw,3.2rem);letter-spacing:-.03em}
+.pl-logo span,.logo span{color:var(--accent)}
+.pl-count{font-family:var(--fd);font-size:.9rem;color:var(--muted);margin:1rem 0 .6rem;text-align:right}
+.pl-bar{height:2px;background:var(--line);overflow:hidden}
+.pl-bar i{display:block;height:100%;background:var(--accent);transform:scaleX(0);transform-origin:left}
 
-        .custom-input {
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid #cbd5e1;
-            border-radius: 0;
-            padding: 12px 0;
-            width: 100%;
-            outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        .custom-input:focus { 
-            border-bottom-color: #3b82f6; 
-            box-shadow: 0 1px 0 0 #3b82f6; 
-        }
+/* ---------- cursor ---------- */
+.cursor,.cursor-ring{position:fixed;left:0;top:0;z-index:90;pointer-events:none;border-radius:50%}
+.cursor{width:6px;height:6px;margin:-3px 0 0 -3px;background:var(--accent)}
+.cursor-ring{width:38px;height:38px;margin:-19px 0 0 -19px;border:1px solid rgba(255,255,255,.35);display:grid;place-items:center;transition:width .35s var(--ease),height .35s var(--ease),margin .35s var(--ease),background .35s,border-color .35s}
+.cursor-ring span{font-size:.6rem;letter-spacing:.15em;font-weight:700;color:#0b0b10}
+.cursor-ring.big{width:64px;height:64px;margin:-32px 0 0 -32px;border-color:var(--accent)}
+.cursor-ring.txt{width:80px;height:80px;margin:-40px 0 0 -40px;background:var(--accent);border-color:transparent}
+@media (hover:none){.cursor,.cursor-ring{display:none}}
 
-        .hero-gradient { background: linear-gradient(180deg, #ffffff 0%, #c7d2fe 100%); }
-        .booking-gradient { background: linear-gradient(180deg, #ffffff 0%, #e0e7ff 100%); }
-        .footer-bg { background-color: #0b112c; }
+/* ---------- footprint rail ---------- */
+.rail{position:fixed;left:clamp(6px,1.6vw,26px);top:50%;transform:translateY(-50%);height:46vh;width:24px;z-index:40;pointer-events:none}
+.rail-line{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line)}
+.rail-line i{position:absolute;inset:0;background:var(--accent);transform-origin:top;transform:scaleY(0)}
+#steps{position:absolute;inset:0}
+.step{position:absolute;left:50%;width:9px;height:18px;margin:-9px 0 0 -4.5px;background:var(--accent);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 40'%3E%3Cellipse cx='10' cy='12' rx='7.5' ry='11'/%3E%3Cellipse cx='10' cy='32' rx='5.5' ry='7.5'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 40'%3E%3Cellipse cx='10' cy='12' rx='7.5' ry='11'/%3E%3Cellipse cx='10' cy='32' rx='5.5' ry='7.5'/%3E%3C/svg%3E") center/contain no-repeat;
+  animation:step 2.2s ease forwards}
+@keyframes step{0%{opacity:0}12%{opacity:1}70%{opacity:.8}100%{opacity:0}}
 
-        /* Slider Specific Classes */
-        .slider-track {
-            display: flex;
-            will-change: transform;
-            user-select: none; 
-            -webkit-user-select: none;
-            touch-action: pan-y;
-        }
-        .slider-item {
-            flex: 0 0 100%;
-            width: 100%;
-            padding: 0 10px;
-            box-sizing: border-box;
-        }
-        .slider-item img {
-            pointer-events: none;
-        }
-        .grabbing { cursor: grabbing !important; }
-        .grab { cursor: grab; }
-        
-        /* HD Image Fix */
-        .doctor-img {
-            width: 100%;
-            height: 320px;
-            object-fit: cover;
-            object-position: top;
-        }
-    </style>
+/* ---------- nav ---------- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:1.2rem var(--pad);transition:transform .6s var(--ease)}
+.nav.hide{transform:translateY(-110%)}
+.nav::before{content:'';position:absolute;inset:0;background:linear-gradient(#07070cdd,transparent);z-index:-1;pointer-events:none}
+.logo{font-weight:800;font-size:1.35rem}
+.links{display:flex;gap:2.2rem;font-size:.9rem;color:var(--muted)}
+.links a{position:relative;transition:color .3s}
+.links a:hover{color:var(--ink)}
+.links a::after{content:'';position:absolute;left:0;bottom:-4px;height:1px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
+.links a:hover::after{transform:scaleX(1);transform-origin:left}
+.burger{display:none;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);position:relative}
+.burger span{position:absolute;left:12px;right:12px;height:1.5px;background:var(--ink);transition:.4s var(--ease)}
+.burger span:first-child{top:16px}.burger span:last-child{bottom:16px}
+.nav.open .burger span:first-child{top:20px;transform:rotate(45deg)}
+.nav.open .burger span:last-child{bottom:19.5px;transform:rotate(-45deg)}
+
+/* ---------- hero ---------- */
+.hero{display:flex;align-items:center;overflow:hidden}
+.bg-word{position:absolute;left:50%;top:50%;translate:-50% -50%;font-family:var(--fd);font-weight:800;font-size:22vw;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.07);white-space:nowrap;pointer-events:none}
+.hero-copy{position:relative;max-width:46rem;padding-top:6rem}
+.hero-title{font-size:clamp(4rem,12vw,11.5rem);font-weight:800;margin-bottom:1.6rem}
+.hero-sub{font-size:clamp(1rem,1.4vw,1.2rem);color:var(--muted);max-width:28rem;margin-bottom:2.2rem}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap}
+.hero-stats{display:flex;gap:clamp(1.5rem,4vw,3.5rem);margin-top:3.2rem}
+.hero-stats b{display:block;font-family:var(--fd);font-size:clamp(1.6rem,3vw,2.4rem)}
+.hero-stats small{color:var(--muted);font-size:.8rem;letter-spacing:.05em}
+.scroll-cue{position:absolute;bottom:2rem;left:50%;translate:-50% 0;display:flex;flex-direction:column;align-items:center;gap:.6rem;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.scroll-cue i{width:1px;height:48px;background:linear-gradient(var(--accent),transparent);animation:cue 2s var(--ease) infinite;transform-origin:top}
+@keyframes cue{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ---------- marquee ---------- */
+.marquee{position:relative;padding:2.2rem 0;border-block:1px solid var(--line);overflow:hidden;background:rgba(7,7,12,.4);backdrop-filter:blur(6px)}
+.mq-track{display:flex;width:max-content;font-family:var(--fd);font-weight:800;font-size:clamp(2rem,5vw,4.5rem);letter-spacing:-.02em;will-change:transform}
+.mq-track span{padding-right:.4em;white-space:nowrap}
+.mq-track b{color:transparent;-webkit-text-stroke:1px var(--accent)}
+
+/* ---------- products ---------- */
+.product{display:flex;align-items:center;padding-block:14vh;overflow:hidden}
+.product.right{justify-content:flex-end}
+.p-num{position:absolute;top:8vh;font-family:var(--fd);font-weight:800;font-size:clamp(8rem,22vw,20rem);line-height:1;color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--accent) 45%,transparent);pointer-events:none}
+.product.left .p-num{right:var(--pad)}.product.right .p-num{left:var(--pad)}
+.p-ghost{position:absolute;bottom:6vh;font-family:var(--fd);font-weight:800;font-size:clamp(5rem,16vw,15rem);opacity:.05;pointer-events:none;letter-spacing:-.04em}
+.product.left .p-ghost{right:10%}.product.right .p-ghost{left:8%}
+.p-card{position:relative;width:min(520px,100%);padding:clamp(1.5rem,3vw,2.6rem);will-change:transform}
+.p-top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+.p-tag{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.p-name{font-size:clamp(2.6rem,5vw,4.4rem);font-weight:800;margin:.7rem 0 .8rem}
+.p-tagline{color:var(--muted);margin-bottom:1.4rem}
+.ring{position:relative;width:84px;height:84px;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:5}
+.ring .bgc{stroke:var(--line)}
+.ring .fg{stroke:var(--accent);stroke-linecap:round;stroke-dasharray:226;stroke-dashoffset:226}
+.ring div{position:absolute;inset:0;display:grid;place-content:center;text-align:center;font-family:var(--fd);font-weight:700;font-size:1.25rem;line-height:1}
+.ring small{font-family:var(--fb);font-size:.55rem;letter-spacing:.1em;color:var(--muted);font-weight:500;margin-top:4px}
+.rating{display:flex;align-items:center;gap:.7rem;margin-bottom:1.6rem;flex-wrap:wrap}
+.stars{position:relative;font-size:1.1rem;letter-spacing:2px;color:rgba(255,255,255,.15)}
+.stars .fill{position:absolute;left:0;top:0;width:0;overflow:hidden;white-space:nowrap;color:var(--gold)}
+.rating b{font-family:var(--fd);font-size:1.1rem}
+.rating small{color:var(--muted)}
+.comfort{display:grid;gap:.75rem;margin-bottom:1.6rem}
+.bar-row{display:grid;grid-template-columns:7.5rem 1fr 3rem;align-items:center;gap:.8rem;font-size:.82rem;color:var(--muted)}
+.bar-row b{color:var(--ink);text-align:right;font-weight:600}
+.bar{height:6px;border-radius:6px;background:rgba(255,255,255,.07);overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 35%,transparent),var(--accent))}
+.specs{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;padding:1.1rem 0;border-block:1px solid var(--line);margin-bottom:1.5rem}
+.specs b{display:block;font-family:var(--fd);font-size:1.5rem}
+.specs small{color:var(--muted);font-size:.75rem}
+.p-foot{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.price{font-family:var(--fd);font-weight:800;font-size:2rem;line-height:1}
+.price small{display:block;font-family:var(--fb);font-size:.72rem;color:var(--muted);font-weight:400;margin-top:.35rem}
+
+/* ---------- anatomy ---------- */
+.anatomy{height:300vh;padding:0}
+.anatomy .sticky{position:sticky;top:0;height:100vh;padding:7rem var(--pad) 3rem;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
+.anat-head{max-width:30rem}
+.anat-head p:last-child{color:var(--muted);margin-top:1rem}
+.legend{list-style:none;max-width:22rem;counter-reset:l}
+.legend li{padding:.65rem 0 .65rem 2.4rem;border-top:1px solid var(--line);position:relative;opacity:.28;transition:opacity .5s,transform .5s var(--ease);counter-increment:l}
+.legend li::before{content:'0' counter(l);position:absolute;left:0;top:.75rem;font-family:var(--fd);font-size:.8rem;color:var(--accent)}
+.legend li.on{opacity:1;transform:translateX(6px)}
+.legend b{font-family:var(--fd);font-size:1rem;display:block}
+.legend p{font-size:.8rem;color:var(--muted);max-height:0;overflow:hidden;transition:max-height .6s var(--ease)}
+.legend li.cur p{max-height:5rem}
+.anat-mobile{display:none}
+.tags{position:fixed;inset:0;z-index:3;pointer-events:none}
+.tag{position:absolute;left:0;top:0;opacity:0;will-change:transform,opacity}
+.tag .dot{position:absolute;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 30%,transparent)}
+.tag::after{content:'';position:absolute;top:0;left:0;width:64px;height:1px;background:linear-gradient(90deg,var(--accent),transparent)}
+.tag.l::after{left:-64px;background:linear-gradient(-90deg,var(--accent),transparent)}
+.tag .t{position:absolute;top:-1.1rem;left:72px;white-space:nowrap;padding:.45rem .8rem;border-radius:12px;background:rgba(10,10,16,.72);border:1px solid var(--line);backdrop-filter:blur(10px)}
+.tag.l .t{left:auto;right:72px;text-align:right}
+.tag b{display:block;font-family:var(--fd);font-size:.85rem}
+.tag small{font-size:.7rem;color:var(--muted)}
+
+/* ---------- studio ---------- */
+.studio{display:flex;flex-direction:column;justify-content:space-between;padding-top:7rem;padding-bottom:2.5rem}
+.studio-head{position:relative;z-index:2;pointer-events:none;max-width:30rem}
+.studio-head p:last-child{color:var(--muted);margin-top:1rem}
+.studio-stage{position:absolute;inset:0;z-index:1;cursor:grab;touch-action:pan-y}
+.studio-stage:active{cursor:grabbing}
+.studio-ui{position:relative;z-index:2;align-self:center;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1rem 1.4rem;padding:1rem 1.2rem}
+.swatches{display:flex;gap:.6rem}
+.sw{width:34px;height:34px;border-radius:50%;outline:1px solid var(--line);outline-offset:3px;background:linear-gradient(135deg,var(--a) 50%,var(--b) 50%);transition:transform .3s var(--ease),outline-color .3s}
+.sw.on{outline-color:var(--accent);transform:scale(1.12)}
+.cw-name{font-size:.8rem;color:var(--muted);min-width:9rem}
+.tools{display:flex;gap:.5rem;flex-wrap:wrap}
+
+/* ---------- reviews ---------- */
+.reviews{padding-block:16vh;min-height:auto}
+.reviews h2{max-width:14ch;margin-bottom:3rem}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.rev{padding:1.8rem}
+.rev .gold{color:var(--gold);letter-spacing:2px}
+.rev p{margin:1rem 0 1.4rem;font-size:1.02rem}
+.rev-by{display:flex;align-items:center;gap:.8rem;font-size:.85rem;color:var(--muted)}
+.av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#0b0b10;background:var(--accent)}
+.big-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:4rem;padding-top:2.5rem;border-top:1px solid var(--line)}
+.big-stats b{font-family:var(--fd);font-size:clamp(2.2rem,5vw,4rem);display:block;line-height:1}
+.big-stats small{color:var(--muted)}
+
+/* ---------- order ---------- */
+.order{padding-block:14vh}
+.order-wrap{display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(2rem,5vw,5rem);align-items:start}
+.order-intro p.lead{color:var(--muted);max-width:26rem;margin:1.2rem 0 2rem}
+.mini-label{display:block;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem}
+.match{margin-bottom:1.6rem}
+.row{display:flex;gap:.5rem;flex-wrap:wrap}
+.fit{padding:1.2rem;max-width:26rem}
+.fit .inp{flex:1;min-width:0}
+.fit-out{margin-top:.7rem;font-size:.9rem;min-height:1.3em}
+.order-form{padding:clamp(1.4rem,3vw,2.4rem);display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.field{display:flex;flex-direction:column;gap:.4rem}
+.field.full{grid-column:1/-1}
+.field label{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.inp{width:100%;padding:.9rem 1rem;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--line);transition:border-color .3s,background .3s;resize:vertical}
+.inp:focus{border-color:var(--accent);background:rgba(255,255,255,.07)}
+select.inp option{background:#12121c}
+.inp:user-invalid{border-color:#ff4d6d}
+.qty{display:flex;align-items:center;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.qty button{width:46px;height:48px;font-size:1.2rem}
+.qty button:hover{color:var(--accent)}
+.qty output{flex:1;text-align:center;font-weight:600}
+.summary{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding-top:1.2rem;border-top:1px solid var(--line);flex-wrap:wrap}
+.summary small{display:block;color:var(--muted);font-size:.8rem}
+.total{font-family:var(--fd);font-weight:800;font-size:2rem}
+.submit{grid-column:1/-1;justify-content:center;font-size:1.05rem;padding:1.15rem}
+.submit.loading{pointer-events:none;opacity:.7}
+.secure{grid-column:1/-1;text-align:center;font-size:.75rem;color:var(--muted)}
+
+/* ---------- CTA ---------- */
+.cta{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;padding-top:42vh}
+.cta-title{font-size:clamp(3rem,9vw,9rem);font-weight:800;margin-bottom:2.6rem}
+.foot{width:100%;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-top:12vh;padding:2rem 0;border-top:1px solid var(--line);font-size:.82rem;color:var(--muted)}
+.foot nav{display:flex;gap:1.5rem}
+.foot a:hover{color:var(--accent)}
+
+/* ---------- modal + confetti ---------- */
+.modal{position:fixed;inset:0;z-index:95;display:grid;place-items:center;padding:1.2rem;background:rgba(5,5,9,.6);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .5s}
+.modal.open{opacity:1;pointer-events:auto}
+.modal-card{width:min(440px,100%);padding:2.4rem 2rem;text-align:center;transform:translateY(30px) scale(.96);transition:transform .7s var(--ease)}
+.modal.open .modal-card{transform:none}
+.tick{width:64px;height:64px;margin:0 auto 1.2rem;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#0b0b10;font-size:1.8rem;font-weight:800}
+.modal-card h3{font-size:2rem;margin-bottom:.6rem}
+.modal-card p{color:var(--muted);font-size:.92rem}
+.m-id{font-family:var(--fd);font-size:1.2rem;margin:1rem 0 1.6rem;letter-spacing:.08em}
+.m-actions{display:flex;flex-direction:column;gap:.7rem}
+.m-actions .btn{justify-content:center}
+.confetti{position:fixed;left:0;top:0;width:8px;height:14px;z-index:99;pointer-events:none;border-radius:2px}
+
+/* ---------- responsive ---------- */
+@media (max-width:899px){
+  .links{position:fixed;inset:0;flex-direction:column;justify-content:center;align-items:center;gap:1.6rem;background:rgba(7,7,12,.96);font-family:var(--fd);font-size:2rem;color:var(--ink);clip-path:circle(0 at calc(100% - 40px) 40px);transition:clip-path .8s var(--ease);z-index:-1}
+  .nav.open .links{clip-path:circle(150% at calc(100% - 40px) 40px)}
+  .burger{display:block}
+  .nav>.btn-sm{display:none}
+  .hero{align-items:flex-end;padding-bottom:5.5rem}
+  .hero-copy{padding-top:0}
+  .hero-title{font-size:clamp(3.4rem,17vw,6rem);margin-bottom:1rem}
+  .hero-sub{margin-bottom:1.5rem}
+  .hero-stats{margin-top:2rem}
+  .scroll-cue{display:none}
+  .product,.product.right{justify-content:center;padding-top:44vh;padding-bottom:10vh}
+  .p-num{top:4vh}
+  .bar-row{grid-template-columns:6.2rem 1fr 2.6rem}
+  .anatomy .sticky{padding-top:5.5rem}
+  .legend{display:none}
+  .anat-mobile{display:block;padding:1rem 1.2rem}
+  .anat-mobile b{font-family:var(--fd)}
+  .anat-mobile p{font-size:.82rem;color:var(--muted)}
+  .tag::after{width:26px}.tag.l::after{left:-26px}
+  .tag .t{left:32px;padding:.3rem .55rem}.tag.l .t{right:32px}
+  .tag b{font-size:.7rem}.tag small{display:none}
+  .studio-ui{width:100%}
+  .rev-grid{grid-template-columns:1fr}
+  .big-stats{grid-template-columns:repeat(2,1fr);gap:2rem 1rem}
+  .order-wrap,.order-form{grid-template-columns:1fr}
+  .cta{padding-top:38vh}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
 </head>
-<body class="antialiased">
+<body class="loading">
 
-    <nav class="flex items-center justify-between p-6 bg-white sticky top-0 z-50 shadow-sm reveal active">
-        <div class="flex items-center gap-2">
-            <i class="fa-solid fa-asterisk text-blue-500 text-2xl"></i>
-            <span class="text-xl font-bold text-navy-900 tracking-tight">Advanced Dental Care</span>
+<div class="preloader" id="preloader">
+  <div class="pl-inner">
+    <div class="pl-logo">DEV<span>WALKS</span></div>
+    <div class="pl-count"><span id="plNum">0</span>%</div>
+    <div class="pl-bar"><i id="plBar"></i></div>
+  </div>
+</div>
+
+<div class="aura"></div>
+<canvas id="webgl"></canvas>
+<div class="grain"></div>
+<div class="tags" id="tags"></div>
+<div class="cursor"></div><div class="cursor-ring"><span></span></div>
+<div class="rail"><div class="rail-line"><i id="railFill"></i></div><div id="steps"></div></div>
+
+<header class="nav" id="nav">
+  <a href="#hero" class="logo" data-link>DEV<span>WALKS</span></a>
+  <nav class="links">
+    <a href="#p0" data-link>Collection</a>
+    <a href="#anatomy" data-link>Anatomy</a>
+    <a href="#studio" data-link>3D Studio</a>
+    <a href="#reviews" data-link>Reviews</a>
+    <a href="#order" data-link>Order</a>
+  </nav>
+  <a href="#order" class="btn btn-sm magnetic" data-link>Order Now</a>
+  <button class="burger" id="burger" aria-label="Menu"><span></span><span></span></button>
+</header>
+
+<main>
+  <section id="hero" class="hero">
+    <div class="bg-word" data-speed="-0.3">DEVWALKS</div>
+    <div class="hero-copy">
+      <p class="eyebrow" data-reveal>● New Season — Drop 07</p>
+      <h1 class="hero-title" data-split>Walk<br>On <em>Air.</em></h1>
+      <p class="hero-sub" data-reveal>Engineered cushioning, hand-finished uppers and a sole stack you can actually see. Spin it, split it and order it in under a minute.</p>
+      <div class="hero-cta" data-reveal>
+        <a href="#order" class="btn magnetic" data-link>Order Now →</a>
+        <a href="#studio" class="btn btn-ghost magnetic" data-link>View in 3D</a>
+      </div>
+      <div class="hero-stats" data-reveal>
+        <div><b data-count="50" data-suffix="K+">0</b><small>Happy walkers</small></div>
+        <div><b data-count="4.9" data-dec="1">0</b><small>Avg. rating</small></div>
+        <div><b data-count="6">0</b><small>Sole layers</small></div>
+      </div>
+    </div>
+    <div class="scroll-cue">Scroll<i></i></div>
+  </section>
+
+  <div class="marquee"><div class="mq-track" id="mq"></div></div>
+
+  <div id="products"></div>
+
+  <section id="anatomy" class="anatomy">
+    <div class="sticky">
+      <div class="anat-head">
+        <p class="eyebrow">Sole Anatomy</p>
+        <h2 data-split>Six layers.<br><em>Zero</em> compromise.</h2>
+        <p>Keep scrolling. The shoe splits into its layers so you can see what goes under every step.</p>
+      </div>
+      <ul class="legend" id="legend"></ul>
+      <div class="anat-mobile glass" id="anatMobile"><b></b><p></p></div>
+    </div>
+  </section>
+
+  <section id="studio" class="studio">
+    <div class="studio-stage" id="stage" data-cursor="DRAG"></div>
+    <div class="studio-head">
+      <p class="eyebrow">3D Studio</p>
+      <h2 data-split>Make it<br><em>yours.</em></h2>
+      <p>Drag to rotate, pick a colourway, or use X-ray to look inside.</p>
+    </div>
+    <div class="studio-ui glass">
+      <div class="swatches" id="swatches"></div>
+      <span class="cw-name" id="cwName"></span>
+      <div class="tools">
+        <button class="chip on" id="tSpin">Auto-spin</button>
+        <button class="chip" id="tXray">X-ray</button>
+        <button class="chip" id="tExplode">Explode</button>
+        <button class="chip" id="tZin">＋</button>
+        <button class="chip" id="tZout">－</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews" class="reviews">
+    <p class="eyebrow">Loved on every street</p>
+    <h2 data-split>Real feet.<br>Real <em>reviews.</em></h2>
+    <div class="rev-grid">
+      <div class="rev glass" data-reveal><div class="gold">★★★★★</div><p>“I ran a half marathon in the AeroGlide and my knees didn't complain once. Feels unreal.”</p><div class="rev-by"><span class="av">AK</span>Arjun K. · Runner</div></div>
+      <div class="rev glass" data-reveal><div class="gold">★★★★★</div><p>“I'm on my feet for 12-hour shifts. The Cloud Nomad is the first shoe that didn't hurt by evening.”</p><div class="rev-by"><span class="av">SR</span>Sneha R. · Nurse</div></div>
+      <div class="rev glass" data-reveal><div class="gold">★★★★☆</div><p>“The Street Phantom gets compliments every single day. Ordering took about 30 seconds.”</p><div class="rev-by"><span class="av">MV</span>Mohit V. · Designer</div></div>
+    </div>
+    <div class="big-stats">
+      <div><b data-count="50000" data-suffix="+">0</b><small>Pairs delivered</small></div>
+      <div><b data-count="98" data-suffix="%">0</b><small>Would buy again</small></div>
+      <div><b data-count="4.9" data-dec="1" data-suffix="★">0</b><small>Average rating</small></div>
+      <div><b data-count="30" data-suffix=" days">0</b><small>Free returns</small></div>
+    </div>
+  </section>
+
+  <section id="order" class="order">
+    <div class="order-wrap">
+      <div class="order-intro">
+        <p class="eyebrow">Order directly</p>
+        <h2 data-split>Your pair,<br><em>one tap</em> away.</h2>
+        <p class="lead">No account needed. Your order goes straight to our team, and we'll confirm it on WhatsApp within minutes.</p>
+        <div class="match">
+          <span class="mini-label">Stride Match: what do you need it for?</span>
+          <div class="row" id="match">
+            <button class="chip" data-m="0">Running</button>
+            <button class="chip" data-m="1">All-day comfort</button>
+            <button class="chip" data-m="2">Street style</button>
+          </div>
         </div>
-        <button class="w-10 h-10 bg-navy-900 text-white rounded flex items-center justify-center hover:bg-navy-800 transition">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-    </nav>
-
-    <header class="hero-gradient px-6 pt-12 pb-24 text-center rounded-b-[40px] relative">
-        <div class="reveal">
-            <span class="inline-block bg-white px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 tracking-wider mb-6 shadow-sm">DENTAL CLINIC</span>
+        <div class="fit glass">
+          <span class="mini-label">Size finder: foot length (cm)</span>
+          <div class="row"><input class="inp" id="footCm" type="number" min="18" max="34" step="0.1" placeholder="e.g. 26.5"><button class="btn btn-sm" id="fitBtn" type="button">Find</button></div>
+          <div class="fit-out" id="fitOut"></div>
         </div>
-        
-        <h1 class="text-4xl md:text-6xl font-medium text-navy-900 leading-tight mb-8 reveal" style="transition-delay: 100ms;">
-            Brighten your smile <br> with <span class="font-serif italic text-navy-800">expert dental care</span>
-        </h1>
-        
-        <div class="flex justify-center mb-16 reveal" style="transition-delay: 200ms;">
-            <button class="bg-navy-900 text-white pl-6 pr-2 py-2 rounded-full flex items-center gap-4 hover:scale-105 transition-transform shadow-lg group">
-                <span class="font-medium">Schedule Your Visit</span>
-                <div class="bg-white text-navy-900 w-10 h-10 rounded-full flex items-center justify-center group-hover:bg-gray-100 transition-colors">
-                    <i class="fa-solid fa-arrow-right -rotate-45"></i>
-                </div>
-            </button>
-        </div>
+      </div>
+      <form class="order-form glass" id="orderForm" novalidate>
+        <div class="field"><label>Full name</label><input class="inp" name="name" required placeholder="Your name"></div>
+        <div class="field"><label>Phone / WhatsApp</label><input class="inp" name="phone" required type="tel" pattern="[0-9+ ]{8,15}" placeholder="+91 98xxxxxx"></div>
+        <div class="field full"><label>Email</label><input class="inp" name="email" type="email" placeholder="you@email.com"></div>
+        <div class="field"><label>Model</label><select class="inp" name="model" id="fModel"></select></div>
+        <div class="field"><label>Colourway</label><select class="inp" name="colour" id="fColour"></select></div>
+        <div class="field"><label>Size (UK)</label><select class="inp" name="size" id="fSize"></select></div>
+        <div class="field"><label>Quantity</label><div class="qty"><button type="button" id="qMinus">−</button><output id="qty">1</output><button type="button" id="qPlus">+</button></div></div>
+        <div class="field full"><label>Delivery address</label><textarea class="inp" name="address" rows="2" required placeholder="House, street, city, PIN"></textarea></div>
+        <div class="field full"><label>Notes (optional)</label><input class="inp" name="notes" placeholder="Gift wrap, delivery time…"></div>
+        <div class="summary"><div><small>Total · Cash on delivery available</small><div class="total" id="total">₹0</div></div><small>Free shipping · 30-day returns</small></div>
+        <button class="btn submit magnetic" id="submitBtn" type="submit">Place Order →</button>
+        <p class="secure">🔒 Your details go only to the DevWalks team.</p>
+      </form>
+    </div>
+  </section>
 
-        <div class="relative w-32 h-32 mx-auto reveal" style="transition-delay: 300ms;">
-            <div class="absolute inset-0 bg-white/40 rounded-full backdrop-blur-sm border border-white/60 flex items-center justify-center">
-                <span class="text-4xl font-bold text-navy-900">M</span>
-            </div>
-            <svg class="absolute inset-0 w-full h-full animate-spin-slow" viewBox="0 0 100 100">
-                <path id="circlePath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />
-                <text class="text-[10px] font-medium fill-navy-900 uppercase tracking-widest">
-                    <textPath href="#circlePath" startOffset="0%">Your Dental Assistant | Your Dental Assistant | </textPath>
-                </text>
-            </svg>
-        </div>
-    </header>
-
-    <main class="px-4 -mt-10 space-y-12 pb-8 max-w-md mx-auto md:max-w-4xl overflow-hidden">
-
-        <div class="bg-white rounded-3xl p-8 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] reveal">
-            <h3 class="text-lg font-semibold text-navy-900 mb-2">Caring Dentists</h3>
-            <p class="text-gray-600 text-sm mb-4">Your health and safety are our top priority</p>
-            <a href="#" class="text-navy-900 font-semibold text-sm flex items-center justify-center gap-2 hover:opacity-70 transition">
-                Explore More <i class="fa-solid fa-arrow-right -rotate-45"></i>
-            </a>
-        </div>
-
-        <div class="grid grid-cols-2 gap-4">
-            <div class="bg-white rounded-3xl p-6 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] reveal flex flex-col justify-center items-center">
-                <i class="fa-solid fa-tooth text-blue-500 text-2xl mb-3"></i>
-                <p class="text-gray-500 text-xs mb-1">Smiles Transformed</p>
-                <h4 class="text-2xl font-bold text-navy-900">5,000+</h4>
-            </div>
-            
-            <div class="bg-white rounded-3xl overflow-hidden reveal relative h-40 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-                <img src="https://i.ibb.co/7NQYj8TQ/1774104674862.png" alt="Dental Equipment" class="absolute inset-0 w-full h-full object-cover z-10">
-            </div>
-        </div>
-
-        <div class="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] reveal flex items-center gap-5">
-            <div class="flex -space-x-4 shrink-0">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&h=100" class="w-12 h-12 rounded-full border-2 border-white object-cover relative z-30" alt="User">
-                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&h=100" class="w-12 h-12 rounded-full border-2 border-white object-cover relative z-20" alt="User">
-                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=100&h=100" class="w-12 h-12 rounded-full border-2 border-white object-cover relative z-10" alt="User">
-            </div>
-            <div>
-                <p class="text-xs text-gray-500 mb-0.5">Join 5,000+</p>
-                <p class="text-navy-900 font-medium text-sm leading-tight">Trusted by 5,000+ happy patients</p>
-            </div>
-        </div>
-
-        <div class="text-center pt-10 pb-4 reveal">
-            <span class="inline-block border border-gray-200 px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 mb-6 uppercase"># About Clinic</span>
-            <h2 class="text-3xl font-medium text-navy-900 leading-tight mb-4">Your trusted partners in<br>dental care</h2>
-            <p class="text-gray-600 text-sm leading-relaxed mb-8 px-2">
-                At Advanced Dental Care, we believe that a healthy smile is a happy smile. Our dedicated team of professionals combines years of experience, cutting-edge technology, and a warm, caring atmosphere to ensure you get the best dental care possible.
-            </p>
-            <div class="flex justify-center mb-10">
-                <button class="bg-navy-900 text-white pl-6 pr-2 py-2 rounded-full flex items-center gap-4 hover:scale-105 transition-transform shadow-lg group">
-                    <span class="font-medium text-sm">Meet a Doctor</span>
-                    <div class="bg-white text-navy-900 w-10 h-10 rounded-full flex items-center justify-center group-hover:bg-gray-100 transition-colors">
-                        <i class="fa-solid fa-arrow-right -rotate-45"></i>
-                    </div>
-                </button>
-            </div>
-            
-            <div class="rounded-3xl overflow-hidden reveal">
-                <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&q=80&w=800" alt="Dentist treating patient" class="w-full h-64 object-cover">
-            </div>
-        </div>
-
-        <div class="text-center pt-10 reveal">
-            <span class="inline-block border border-gray-200 px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 mb-6 uppercase"># Why Choose Us</span>
-            <h2 class="text-3xl font-medium text-navy-900 leading-tight mb-8">The top reasons our<br>patients love us</h2>
-        </div>
-
-        <div class="bg-white rounded-3xl p-8 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] reveal">
-            <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center text-navy-900 text-4xl">
-                <i class="fa-solid fa-file-contract"></i>
-            </div>
-            <p class="text-navy-900 font-medium mb-4">Certified by the Dental Association</p>
-            <a href="#" class="text-blue-600 font-semibold text-sm flex items-center justify-center gap-2 border-b border-blue-600 pb-1 inline-flex hover:opacity-70 transition">
-                Schedule Your Visit <i class="fa-solid fa-arrow-right -rotate-45"></i>
-            </a>
-        </div>
-
-        <div class="bg-white rounded-3xl p-8 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] reveal">
-            <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                <i class="fa-solid fa-tooth text-blue-600 text-xl"></i>
-            </div>
-            <h3 class="text-navy-900 font-semibold mb-3">Experienced & Caring Dentists</h3>
-            <p class="text-gray-600 text-sm leading-relaxed">
-                With over years of experience, our team provides expert care with a gentle touch, ensuring a comfortable and effective experience every time.
-            </p>
-        </div>
-
-        <div class="bg-white rounded-3xl p-8 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] reveal">
-            <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                <i class="fa-solid fa-calendar-day text-blue-600 text-xl"></i>
-            </div>
-            <h3 class="text-navy-900 font-semibold mb-3">Same-Day Appointments</h3>
-            <p class="text-gray-600 text-sm leading-relaxed">
-                We respect your time. Flexible scheduling including emergency same-day visits available.
-            </p>
-        </div>
-
-        <div class="text-center pt-10 reveal">
-            <span class="inline-block border border-gray-200 px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 mb-6 uppercase"># Services</span>
-            <h2 class="text-3xl font-medium text-navy-900 leading-tight mb-8">Comprehensive dental care for your smile</h2>
-        </div>
-
-        <div class="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mb-8">
-            <ul class="space-y-4" id="services-list">
-                <li class="stagger-item opacity-0 transform translate-y-4 flex items-center justify-between border-b border-gray-100 pb-4 transition-all duration-500">
-                    <div class="flex items-center gap-4">
-                        <span class="font-serif italic text-gray-400 text-lg w-8 shrink-0 text-center relative -top-[2px]">01</span>
-                        <span class="text-navy-900 font-medium">Teeth Cleaning</span>
-                    </div>
-                    <button aria-label="Learn more about Teeth Cleaning" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                        <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
-                    </button>
-                </li>
-                
-                <li class="stagger-item opacity-0 transform translate-y-4 flex items-center justify-between border-b border-gray-100 pb-4 transition-all duration-500">
-                    <div class="flex items-center gap-4">
-                        <span class="font-serif italic text-gray-400 text-lg w-8 shrink-0 text-center relative -top-[2px]">02</span>
-                        <span class="text-navy-900 font-medium">Teeth Whitening</span>
-                    </div>
-                    <button aria-label="Learn more about Teeth Whitening" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                        <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
-                    </button>
-                </li>
-                
-                <li class="stagger-item opacity-0 transform translate-y-4 flex items-center justify-between border-b border-gray-100 pb-4 transition-all duration-500">
-                    <div class="flex items-center gap-4">
-                        <span class="font-serif italic text-gray-400 text-lg w-8 shrink-0 text-center relative -top-[2px]">03</span>
-                        <span class="text-navy-900 font-medium">Orthodontics</span>
-                    </div>
-                    <button aria-label="Learn more about Orthodontics" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                        <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
-                    </button>
-                </li>
-                
-                <li class="stagger-item opacity-0 transform translate-y-4 flex items-center justify-between border-b border-gray-100 pb-4 transition-all duration-500">
-                    <div class="flex items-center gap-4">
-                        <span class="font-serif italic text-gray-400 text-lg w-8 shrink-0 text-center relative -top-[2px]">04</span>
-                        <span class="text-navy-900 font-medium">Dental Implants</span>
-                    </div>
-                    <button aria-label="Learn more about Dental Implants" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                        <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
-                    </button>
-                </li>
-                
-                <li class="stagger-item opacity-0 transform translate-y-4 flex items-center justify-between border-b border-gray-100 pb-4 transition-all duration-500">
-                    <div class="flex items-center gap-4">
-                        <span class="font-serif italic text-gray-400 text-lg w-8 shrink-0 text-center relative -top-[2px]">05</span>
-                        <span class="text-navy-900 font-medium">Emergency Care</span>
-                    </div>
-                    <button aria-label="Learn more about Emergency Care" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                        <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
-                    </button>
-                </li>
-                
-                <li class="stagger-item opacity-0 transform translate-y-4 flex items-center justify-between pt-1 transition-all duration-500">
-                    <div class="flex items-center gap-4">
-                        <span class="font-serif italic text-gray-400 text-lg w-8 shrink-0 text-center relative -top-[2px]">06</span>
-                        <span class="text-navy-900 font-medium">Fillings & Restorations</span>
-                    </div>
-                    <button aria-label="Learn more about Fillings & Restorations" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                        <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
-                    </button>
-                </li>
-            </ul>
-        </div>
-
-        <div class="booking-gradient rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] reveal text-center relative overflow-hidden">
-            <span class="inline-block bg-white border border-gray-200 px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 mb-6 uppercase relative z-10"># Appointment Booking</span>
-            <h2 class="text-2xl font-medium text-navy-900 leading-tight mb-8 relative z-10">Easy & quick appointment booking</h2>
-            
-            <form class="space-y-4 text-left relative z-10">
-                <input type="text" placeholder="Full name *" class="custom-input text-sm">
-                <input type="email" placeholder="Email *" class="custom-input text-sm">
-                <input type="tel" placeholder="Phone number *" class="custom-input text-sm">
-                <input type="text" placeholder="Reason for visit (e.g., toothache, cleaning) *" class="custom-input text-sm mb-6">
-                
-                <div class="flex justify-start">
-                    <button type="button" id="booking-btn" class="relative bg-navy-900 text-white px-8 py-3.5 rounded-full text-sm font-medium transition-all duration-300 hover:shadow-[0_8px_20px_rgba(17,24,54,0.3)] active:scale-95 w-max mt-4 shadow-lg overflow-hidden flex items-center justify-center min-w-[180px] h-[52px]">
-                        <span id="btn-text" class="transition-opacity duration-300 absolute">Reserve Your Spot</span>
-                        
-                        <i id="btn-spinner" class="fa-solid fa-circle-notch fa-spin absolute opacity-0 transition-opacity duration-300 pointer-events-none text-lg"></i>
-                        
-                        <div id="btn-success" class="absolute flex items-center gap-2 opacity-0 transition-opacity duration-300 pointer-events-none">
-                            <i class="fa-solid fa-check text-lg"></i>
-                            <span class="font-bold tracking-wide">Reserved!</span>
-                        </div>
-                    </button>
-                </div>
-            </form>
-            <i class="fa-solid fa-quote-left absolute -bottom-4 -left-2 text-8xl text-blue-100 opacity-50 z-0"></i>
-        </div>
-
-        <div class="reveal relative overflow-hidden -mx-4 px-4 pb-4">
-            <div class="slider-track grab" id="testimonial-track">
-                
-                <div class="slider-item original-slide">
-                    <div class="bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-full flex flex-col justify-between border border-gray-50 pointer-events-none">
-                        <div>
-                            <i class="fa-solid fa-quote-left text-5xl text-blue-100 mb-4"></i>
-                            <p class="font-serif italic text-navy-900 text-lg leading-relaxed mb-6">
-                                The staff made me feel so comfortable and cared for. Pain-free treatment, friendly service, and a brighter smile—couldn't ask for better care!
-                            </p>
-                        </div>
-                        <div class="flex items-center gap-4 mt-auto">
-                            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=100&h=100" class="w-12 h-12 rounded-full object-cover" alt="Anjali Sharma">
-                            <div>
-                                <h4 class="text-navy-900 font-semibold text-sm">Anjali Sharma</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="slider-item original-slide">
-                    <div class="bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-full flex flex-col justify-between border border-gray-50 pointer-events-none">
-                        <div>
-                            <i class="fa-solid fa-quote-left text-5xl text-blue-100 mb-4"></i>
-                            <p class="font-serif italic text-navy-900 text-lg leading-relaxed mb-6">
-                                I've always dreaded visiting the dentist, but Advanced Dental Care changed that completely. The procedure was incredibly smooth and the recovery was fast.
-                            </p>
-                        </div>
-                        <div class="flex items-center gap-4 mt-auto">
-                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&h=100" class="w-12 h-12 rounded-full object-cover" alt="Rahul Desai">
-                            <div>
-                                <h4 class="text-navy-900 font-semibold text-sm">Rahul Desai</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="slider-item original-slide">
-                    <div class="bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-full flex flex-col justify-between border border-gray-50 pointer-events-none">
-                        <div>
-                            <i class="fa-solid fa-quote-left text-5xl text-blue-100 mb-4"></i>
-                            <p class="font-serif italic text-navy-900 text-lg leading-relaxed mb-6">
-                                State-of-the-art clinic with a very warm environment. The doctors explained every step of the process patiently. Highly recommended!
-                            </p>
-                        </div>
-                        <div class="flex items-center gap-4 mt-auto">
-                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=100&h=100" class="w-12 h-12 rounded-full object-cover" alt="Priya Patel">
-                            <div>
-                                <h4 class="text-navy-900 font-semibold text-sm">Priya Patel</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            
-            <div class="flex justify-center items-center gap-2 mt-6" id="slider-dots">
-                <button class="w-2.5 h-2.5 rounded-full bg-navy-900 transition-colors duration-300"></button>
-                <button class="w-2.5 h-2.5 rounded-full bg-gray-200 transition-colors duration-300"></button>
-                <button class="w-2.5 h-2.5 rounded-full bg-gray-200 transition-colors duration-300"></button>
-            </div>
-        </div>
-
-        <div class="text-center pt-10 reveal">
-            <span class="inline-block border border-gray-200 px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 mb-6 uppercase"># Our Team</span>
-            <h2 class="text-3xl font-medium text-navy-900 leading-tight mb-6">Your trusted dental professionals</h2>
-        </div>
-
-        <div id="team-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal mb-8">
-            
-            <div class="stagger-item-team opacity-0 transform translate-y-4 bg-white rounded-3xl p-4 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] group hover:-translate-y-2 transition-transform duration-300 cursor-pointer">
-                <div class="rounded-2xl overflow-hidden mb-4 bg-gray-100">
-                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=600" alt="Dr. Vikrant Walia" class="doctor-img group-hover:scale-105 transition-transform duration-700">
-                </div>
-                <h3 class="text-navy-900 font-semibold mb-1">Dr. Vikrant Walia</h3>
-                <p class="text-gray-500 text-sm pb-2">Chief Dentist</p>
-            </div>
-
-        </div>
-
-        <div class="text-center pt-10 reveal">
-            <span class="inline-block border border-gray-200 px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 mb-6 uppercase"># Insights</span>
-            <h2 class="text-3xl font-medium text-navy-900 leading-tight mb-6">From our blog: tips & insights for healthy smiles</h2>
-        </div>
-
-        <div class="space-y-8">
-            <a href="#" class="insight-card block reveal group cursor-pointer bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-1 [&.hover-activated]:-translate-y-1 transition-transform duration-300 overflow-hidden">
-                <div class="overflow-hidden">
-                    <img src="https://i.ibb.co/rGBKt04w/image-1.jpg" alt="Teeth Cleaning" class="w-full h-56 object-cover group-hover:scale-105 group-[.hover-activated]:scale-105 transition-transform duration-700">
-                </div>
-                <div class="p-6 space-y-4">
-                    <h3 class="text-xl font-medium text-navy-900">5 Tips to Keep Your Teeth Healthy</h3>
-                    <p class="text-gray-600 text-sm">Learn simple daily habits that keep your teeth clean and strong</p>
-                    <div class="flex items-center justify-end">
-                        <div class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-navy-900 group-hover:bg-blue-50 group-[.hover-activated]:bg-blue-50 group-hover:text-blue-600 group-[.hover-activated]:text-blue-600 transition-colors duration-300">
-                            <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            <a href="#" class="insight-card block reveal group cursor-pointer bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-1 [&.hover-activated]:-translate-y-1 transition-transform duration-300 overflow-hidden">
-                <div class="overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&q=80&w=800" alt="Dental Clinic" class="w-full h-56 object-cover group-hover:scale-105 group-[.hover-activated]:scale-105 transition-transform duration-700">
-                </div>
-                <div class="p-6 space-y-4">
-                    <h3 class="text-xl font-medium text-navy-900">How to Choose the Right Toothbrush</h3>
-                    <p class="text-gray-600 text-sm">Find out what toothbrush suits your dental needs best</p>
-                    <div class="flex items-center justify-end">
-                        <div class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-navy-900 group-hover:bg-blue-50 group-[.hover-activated]:bg-blue-50 group-hover:text-blue-600 group-[.hover-activated]:text-blue-600 transition-colors duration-300">
-                            <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            <a href="#" class="insight-card block reveal group cursor-pointer bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-1 [&.hover-activated]:-translate-y-1 transition-transform duration-300 overflow-hidden">
-                <div class="overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&q=80&w=800" alt="Coffee cup" class="w-full h-56 object-cover group-hover:scale-105 group-[.hover-activated]:scale-105 transition-transform duration-700">
-                </div>
-                <div class="p-6 space-y-4">
-                    <h3 class="text-xl font-medium text-navy-900">Top 5 Foods That Secretly Stain Your Teeth</h3>
-                    <p class="text-gray-600 text-sm">Coffee, tea, and berries can dull your smile over time. Learn how to enjoy your favorite foods while protecting your enamel.</p>
-                    <div class="flex items-center justify-end">
-                        <div class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-navy-900 group-hover:bg-blue-50 group-[.hover-activated]:bg-blue-50 group-hover:text-blue-600 group-[.hover-activated]:text-blue-600 transition-colors duration-300">
-                            <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </main>
-
-    <footer class="footer-bg rounded-t-[40px] px-6 pt-16 pb-10 text-white relative mt-8 max-w-md mx-auto md:max-w-4xl">
-        <div class="reveal">
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
-                
-                <div>
-                    <div class="flex items-center gap-2 mb-6">
-                        <i class="fa-solid fa-asterisk text-blue-400 text-2xl"></i>
-                        <span class="text-2xl font-bold tracking-tight">Advanced Dental Care</span>
-                    </div>
-                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">Chuna Mandi, 2333, Raj Guru Road Pahar Ganj.,<br>Pahar Ganj,<br>Delhi-110055</p>
-                    <a href="#" class="inline-flex items-center gap-2 text-sm text-white bg-[#313a60] px-5 py-2.5 rounded-full hover:bg-blue-500 transition-colors w-max shadow-md">
-                        <i class="fa-solid fa-location-dot"></i> Get Directions
-                    </a>
-                </div>
-
-                <div>
-                    <h4 class="font-medium text-gray-300 mb-6 text-sm uppercase tracking-wider">Clinic Hours</h4>
-                    <ul class="space-y-3 text-sm text-gray-400">
-                        <li class="flex justify-between border-b border-[#313a60] pb-2"><span>Mon - Fri</span> <span class="text-white">8:00 AM - 8:00 PM</span></li>
-                        <li class="flex justify-between border-b border-[#313a60] pb-2"><span>Saturday</span> <span class="text-white">9:00 AM - 4:00 PM</span></li>
-                        <li class="flex justify-between pb-2"><span>Sunday</span> <span class="text-blue-400 font-medium">Emergency Only</span></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <div class="bg-white text-navy-900 rounded-2xl p-6 shadow-xl relative overflow-hidden group">
-                        <div class="absolute -right-4 -top-4 text-blue-50 group-hover:scale-110 transition-transform duration-500 text-6xl">
-                            <i class="fa-solid fa-truck-medical"></i>
-                        </div>
-                        <p class="text-xs font-bold text-red-500 uppercase mb-2 tracking-wider relative z-10">Emergency 24/7</p>
-                        <p class="text-sm mb-4 text-gray-600 relative z-10">Need urgent dental care? Call us immediately.</p>
-                        <p class="text-2xl font-bold mb-1 relative z-10">+91 98913 75754</p>
-                        <a href="mailto:info@advanceddentalcare.com" class="text-sm font-medium border-b-2 border-blue-200 hover:border-blue-600 transition-colors relative z-10">info@advanceddentalcare.com</a>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="pt-8 border-t border-[#313a60] flex flex-col md:flex-row items-center justify-between gap-6">
-                <div class="flex gap-4">
-                    <a href="#" class="w-10 h-10 rounded-full bg-[#1e2548] flex items-center justify-center hover:bg-blue-500 transition-colors"><i class="fa-brands fa-facebook-f text-sm"></i></a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-[#1e2548] flex items-center justify-center hover:bg-blue-500 transition-colors"><i class="fa-brands fa-instagram text-sm"></i></a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-[#1e2548] flex items-center justify-center hover:bg-blue-500 transition-colors"><i class="fa-brands fa-linkedin-in text-sm"></i></a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-[#1e2548] flex items-center justify-center hover:bg-blue-500 transition-colors"><i class="fa-brands fa-pinterest-p text-sm"></i></a>
-                </div>
-                
-                <div class="text-center md:text-right">
-                    <p class="text-gray-500 text-xs mb-1">&copy; 2026 Advanced Dental Care. All Rights Reserved.</p>
-                </div>
-            </div>
-
-        </div>
+  <section id="cta" class="cta">
+    <p class="eyebrow">Your next step starts here</p>
+    <h2 class="cta-title" data-split>Don't just walk.<br><em>DevWalk.</em></h2>
+    <a href="#order" class="btn btn-xl magnetic" data-link data-cursor="GO">Get Your Pair</a>
+    <footer class="foot">
+      <span>© 2026 DevWalks. Crafted with motion.</span>
+      <nav><a href="#">Instagram</a><a href="#">WhatsApp</a><a href="#">Returns</a><a href="#">Contact</a></nav>
     </footer>
+  </section>
+</main>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            // 1. Scroll Reveal
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, { threshold: 0.15 });
+<div class="modal" id="modal">
+  <div class="modal-card glass">
+    <div class="tick">✓</div>
+    <h3>Order placed!</h3>
+    <p>Thanks! We've received your order and will confirm it shortly.</p>
+    <div class="m-id" id="mId"></div>
+    <div class="m-actions">
+      <a class="btn" id="mWa" target="_blank" rel="noopener">Confirm on WhatsApp</a>
+      <a class="btn btn-ghost" id="mMail">Send by Email</a>
+      <button class="btn btn-ghost" id="mClose">Close</button>
+    </div>
+  </div>
+</div>
 
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script type="module">
+import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+gsap.registerPlugin(ScrollTrigger);
 
-            // 2. Services List Stagger 
-            const servicesList = document.getElementById('services-list');
-            const staggerItems = document.querySelectorAll('.stagger-item');
-            if (servicesList) {
-                const listObserver = new IntersectionObserver((entries) => {
-                    if(entries[0].isIntersecting) {
-                        staggerItems.forEach((item, index) => {
-                            setTimeout(() => {
-                                item.classList.remove('opacity-0', 'translate-y-4');
-                                item.classList.add('opacity-100', 'translate-y-0');
-                            }, item.dataset.staggerDelay || index * 100);
-                        });
-                        listObserver.unobserve(servicesList);
-                    }
-                }, { threshold: 0.2 });
-                listObserver.observe(servicesList);
-            }
+/* ============ OWNER CONFIG: edit these ============ */
+const CONFIG = {
+  currency: '₹',
+  whatsapp: '919999999999',      // owner's WhatsApp number (country code, no +)
+  email: 'owner@devwalks.com',   // owner's email
+  telegramToken: '',             // optional: Telegram bot token for instant alerts
+  telegramChat: '',              // optional: Telegram chat id
+  endpoint: ''                   // optional: Formspree / your backend URL (POST JSON)
+};
 
-            // 3. Team Stagger
-            const teamGrid = document.getElementById('team-grid');
-            const teamStaggerItems = document.querySelectorAll('.stagger-item-team');
-            if (teamGrid) {
-                const teamObserver = new IntersectionObserver((entries) => {
-                    if(entries[0].isIntersecting) {
-                        teamStaggerItems.forEach((item, index) => {
-                            setTimeout(() => {
-                                item.classList.remove('opacity-0', 'translate-y-4');
-                                item.classList.add('opacity-100', 'translate-y-0');
-                            }, index * 150);
-                        });
-                        teamObserver.unobserve(teamGrid);
-                    }
-                }, { threshold: 0.2 });
-                teamObserver.observe(teamGrid);
-            }
+/* ============ DATA ============ */
+const P = [
+  {name:'AeroGlide', tag:'Performance Running', tagline:'Carbon-plated speed with a cloud-soft landing.', accent:'#ff5a1f', upper:'#ff5a1f', sole:'#f4efe6', rating:4.9, reviews:2184, comfort:96,
+   bars:{Cushioning:98,Support:90,Breathability:94,Durability:88}, specs:[[218,'grams'],[38,'mm stack'],[8,'mm drop']], price:12999},
+  {name:'Cloud Nomad', tag:'All-Day Comfort', tagline:'Double-density foam for 12-hour days.', accent:'#7b5cff', upper:'#7b5cff', sole:'#e8e4ff', rating:4.8, reviews:1640, comfort:99,
+   bars:{Cushioning:99,Support:94,Breathability:86,Durability:92}, specs:[[254,'grams'],[34,'mm stack'],[6,'mm drop']], price:9499},
+  {name:'Street Phantom', tag:'Lifestyle', tagline:'Matte suede upper with a glow-trim outsole.', accent:'#2de2b4', upper:'#1b1d24', sole:'#2de2b4', rating:4.7, reviews:3021, comfort:91,
+   bars:{Cushioning:88,Support:92,Breathability:84,Durability:97}, specs:[[296,'grams'],[30,'mm stack'],[10,'mm drop']], price:7999}
+];
+const LAYERS = [
+  {name:'Knit Upper', desc:'Engineered breathable knit that hugs the foot without hot spots.'},
+  {name:'Memory Sockliner', desc:'6 mm memory foam insole that moulds to your arch.'},
+  {name:'Strobel Board', desc:'Flexible stitched base that joins the upper to the midsole.'},
+  {name:'AirCell Midsole', desc:'Supercritical foam that returns 87% of your energy.'},
+  {name:'Carbon Plate', desc:'Curved carbon plate that rolls you forward with each step.'},
+  {name:'Grip Outsole', desc:'High-abrasion rubber with multi-directional traction lugs.'}
+];
+const COLOURWAYS = [
+  {n:'Ember / Bone', u:'#ff5a1f', s:'#f4efe6'},
+  {n:'Ultraviolet', u:'#7b5cff', s:'#e8e4ff'},
+  {n:'Phantom Mint', u:'#1b1d24', s:'#2de2b4'},
+  {n:'Arctic', u:'#e9eef5', s:'#9fb7ff'},
+  {n:'Gold Rush', u:'#ffb547', s:'#2a1f14'}
+];
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const money = n => CONFIG.currency + Math.round(n).toLocaleString('en-IN');
+const isMobile = () => innerWidth < 900;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-            // 4. Booking Button Animation Logic 
-            const bookingBtn = document.getElementById('booking-btn');
-            if (bookingBtn) {
-                const btnText = document.getElementById('btn-text');
-                const btnSpinner = document.getElementById('btn-spinner');
-                const btnSuccess = document.getElementById('btn-success');
+/* ============ BUILD DOM ============ */
+$('#mq').innerHTML = Array(2).fill('<span>DEVWALKS</span><span><b>WALK ON AIR</b></span><span>✦</span><span>6-LAYER COMFORT</span><span><b>FREE SHIPPING</b></span><span>✦</span>').join('');
+$('#products').innerHTML = P.map((p,i)=>`
+<section id="p${i}" class="product ${i%2?'right':'left'}" data-i="${i}">
+  <div class="p-num" data-speed="0.25">0${i+1}</div>
+  <div class="p-ghost" data-speed="-0.2">${p.name.split(' ')[0].toUpperCase()}</div>
+  <article class="p-card glass" data-reveal>
+    <div class="p-top">
+      <div><span class="p-tag">${p.tag}</span><h3 class="p-name">${p.name}</h3></div>
+      <div class="ring"><svg viewBox="0 0 84 84"><circle class="bgc" cx="42" cy="42" r="36"/><circle class="fg" cx="42" cy="42" r="36" data-ring="${p.comfort}"/></svg>
+        <div><span data-count="${p.comfort}" data-suffix="%">0</span><small>COMFORT</small></div></div>
+    </div>
+    <p class="p-tagline">${p.tagline}</p>
+    <div class="rating"><span class="stars">★★★★★<span class="fill" data-stars="${p.rating}">★★★★★</span></span>
+      <b data-count="${p.rating}" data-dec="1">0</b><small>(<span data-count="${p.reviews}">0</span> reviews)</small></div>
+    <div class="comfort">${Object.entries(p.bars).map(([k,v])=>`<div class="bar-row">${k}<div class="bar"><i data-bar="${v}"></i></div><b data-count="${v}">0</b></div>`).join('')}</div>
+    <div class="specs">${p.specs.map(s=>`<div><b data-count="${s[0]}">0</b><small>${s[1]}</small></div>`).join('')}</div>
+    <div class="p-foot"><div class="price" data-count="${p.price}" data-prefix="${CONFIG.currency}">0<small>Incl. taxes</small></div>
+      <a href="#order" class="btn magnetic" data-link data-pick="${i}">Order ${p.name.split(' ')[0]} →</a></div>
+  </article>
+</section>`).join('');
+$('#legend').innerHTML = LAYERS.map(l=>`<li><b>${l.name}</b><p>${l.desc}</p></li>`).join('');
+$('#tags').innerHTML = LAYERS.map((l,i)=>`<div class="tag ${i%2?'l':''}"><span class="dot"></span><div class="t"><b>${l.name}</b><small>${l.desc.split(' ').slice(0,4).join(' ')}…</small></div></div>`).join('');
+$('#swatches').innerHTML = COLOURWAYS.map((c,i)=>`<button class="sw ${i?'':'on'}" style="--a:${c.u};--b:${c.s}" data-c="${i}" aria-label="${c.n}"></button>`).join('');
+$('#fModel').innerHTML = P.map((p,i)=>`<option value="${i}">${p.name} · ${money(p.price)}</option>`).join('');
+$('#fColour').innerHTML = COLOURWAYS.map(c=>`<option>${c.n}</option>`).join('');
+$('#fSize').innerHTML = Array.from({length:17},(_,i)=>3+i*.5).map(s=>`<option ${s===8?'selected':''}>${s}</option>`).join('');
 
-                bookingBtn.addEventListener('click', function() {
-                    if (this.classList.contains('processing') || this.classList.contains('success')) return;
-                    
-                    this.classList.add('processing');
-                    
-                    btnText.classList.add('opacity-0');
-                    btnSpinner.classList.remove('opacity-0');
-                    btnSpinner.classList.add('opacity-100');
+// split headings into masked lines
+$$('[data-split]').forEach(el=>{
+  el.innerHTML = el.innerHTML.split(/<br\s*\/?>/).map(l=>`<span class="w"><span>${l}</span></span>`).join('<br>');
+});
 
-                    setTimeout(() => {
-                        btnSpinner.classList.remove('opacity-100');
-                        btnSpinner.classList.add('opacity-0');
-                        
-                        this.classList.remove('bg-navy-900', 'hover:bg-navy-800');
-                        this.classList.add('bg-blue-600', 'hover:bg-blue-700', 'success');
-                        
-                        btnSuccess.classList.remove('opacity-0');
-                        btnSuccess.classList.add('opacity-100');
-                        
-                        setTimeout(() => {
-                            this.classList.remove('bg-blue-600', 'hover:bg-blue-700', 'success', 'processing');
-                            this.classList.add('bg-navy-900', 'hover:bg-navy-800');
-                            btnSuccess.classList.remove('opacity-100');
-                            btnSuccess.classList.add('opacity-0');
-                            btnText.classList.remove('opacity-0');
-                        }, 2000);
-                    }, 800);
-                });
-            }
+/* ============ SMOOTH SCROLL ============ */
+const lenis = new Lenis({duration:1.25, easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)), smoothWheel:!reduce});
+let vel = 0;
+lenis.on('scroll', e=>{ ScrollTrigger.update(); vel = e.velocity; });
+gsap.ticker.add(t=>lenis.raf(t*1000)); gsap.ticker.lagSmoothing(0);
+lenis.stop();
+$$('[data-link]').forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault(); $('#nav').classList.remove('open');
+  if(a.dataset.pick){ $('#fModel').value=a.dataset.pick; updateTotal(); }
+  lenis.scrollTo(a.getAttribute('href'),{duration:1.8});
+}));
+$('#burger').onclick=()=>$('#nav').classList.toggle('open');
 
-            // 5. Slider Logic
-            const track = document.getElementById('testimonial-track');
-            const originalSlides = Array.from(document.querySelectorAll('.original-slide'));
-            const dots = document.querySelectorAll('#slider-dots button');
-            
-            const firstClone = originalSlides[0].cloneNode(true);
-            const lastClone = originalSlides[originalSlides.length - 1].cloneNode(true);
-            firstClone.id = 'first-clone'; lastClone.id = 'last-clone';
-            track.appendChild(firstClone); track.insertBefore(lastClone, originalSlides[0]);
-            
-            const allSlides = document.querySelectorAll('.slider-item');
-            let currentIndex = 1;
-            let isDragging = false;
-            let isScrolling = false; 
-            
-            let startPosX = 0;
-            let startPosY = 0;
-            let currentTranslate = 0;
-            let prevTranslate = 0;
-            let animationID;
-            let autoPlayInterval;
+/* ============ THREE.JS SHOE ============ */
+const canvas = $('#webgl');
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(35,1,.1,100); camera.position.set(0,0.6,10);
+scene.add(new THREE.HemisphereLight(0xffffff,0x221133,1.1));
+const key = new THREE.DirectionalLight(0xffffff,2.2); key.position.set(4,6,5); scene.add(key);
+const rim = new THREE.PointLight(0xff5a1f,40,20); rim.position.set(-4,2,-3); scene.add(rim);
+const fill = new THREE.PointLight(0x7b5cff,25,20); fill.position.set(4,-2,3); scene.add(fill);
 
-            const getValidIndex = (index) => {
-                if (index < 0) return 0;
-                if (index > allSlides.length - 1) return allSlides.length - 1;
-                return index;
-            };
+function footShape(sx=1,sz=1){
+  const s = new THREE.Shape(), N=64;
+  for(let k=0;k<=N;k++){
+    const t=k/N*Math.PI*2, c=Math.cos(t);
+    const w = 0.72*(c>0 ? 1 : 0.82 + 0.18*(1+c)); // wider forefoot, narrower heel
+    const x=2*c*sx, z=Math.sin(t)*w*sz;
+    k?s.lineTo(x,z):s.moveTo(x,z);
+  }
+  return s;
+}
+function slab(depth,mat,sx=1,sz=1){
+  const g = new THREE.ExtrudeGeometry(footShape(sx,sz),{depth,bevelEnabled:true,bevelThickness:.03,bevelSize:.03,bevelSegments:4,curveSegments:48});
+  g.rotateX(-Math.PI/2); return new THREE.Mesh(g,mat);
+}
+const M = {
+  upper: new THREE.MeshPhysicalMaterial({color:P[0].upper,roughness:.55,sheen:1,sheenColor:new THREE.Color('#ffffff'),sheenRoughness:.5,transparent:true}),
+  sock: new THREE.MeshStandardMaterial({color:'#2a2a33',roughness:.9}),
+  strobel: new THREE.MeshStandardMaterial({color:'#bfb8aa',roughness:.8}),
+  mid: new THREE.MeshPhysicalMaterial({color:P[0].sole,roughness:.45,clearcoat:.4}),
+  plate: new THREE.MeshPhysicalMaterial({color:'#111',metalness:.6,roughness:.25,clearcoat:1}),
+  out: new THREE.MeshStandardMaterial({color:'#18181d',roughness:.95}),
+  lace: new THREE.MeshStandardMaterial({color:'#f4efe6',roughness:.6})
+};
+const shoe = new THREE.Group(), inner = new THREE.Group(); shoe.add(inner); scene.add(shoe);
+// bottom-up stack: [y, depth, material]
+const stack = [[0,.16,M.out],[.17,.04,M.plate,.92,.85],[.22,.38,M.mid],[.61,.03,M.strobel,.96,.94],[.65,.05,M.sock,.94,.9]];
+const parts = []; // ordered like LAYERS (top→bottom)
+stack.forEach(([y,d,m,sx,sz])=>{ const s=slab(d,m,sx,sz); s.position.y=y; inner.add(s); parts.unshift({obj:s,base:y}); });
+const upper = new THREE.Group();
+const dome = new THREE.Mesh(new THREE.SphereGeometry(1,64,40,0,Math.PI*2,0,Math.PI/2),M.upper);
+dome.scale.set(1.78,1.05,.66); dome.position.x=-.12; upper.add(dome);
+const collar = new THREE.Mesh(new THREE.TorusGeometry(.42,.07,16,48),M.sock); collar.rotation.x=Math.PI/2; collar.scale.set(1.3,1,1); collar.position.set(-.85,.92,0); upper.add(collar);
+for(let k=0;k<5;k++){ const x=-.2+k*.24, y=1.05*Math.sqrt(Math.max(0,1-((x+.12)/1.78)**2));
+  const l=new THREE.Mesh(new THREE.BoxGeometry(.06,.035,.62),M.lace); l.position.set(x,y-.02,0); l.rotation.z=-.25*(x+.12); upper.add(l); }
+upper.position.y=.7; inner.add(upper); parts.unshift({obj:upper,base:.7});
+inner.position.set(0,-.6,0);
+const shadow = new THREE.Mesh(new THREE.CircleGeometry(2.2,48),new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:.35}));
+shadow.rotation.x=-Math.PI/2; shadow.scale.set(1,.45,1); shadow.position.y=-1.5; shoe.add(shadow);
 
-            const updatePosition = (animate = true) => {
-                currentIndex = getValidIndex(currentIndex);
-                const slideWidth = allSlides[0].offsetWidth;
-                
-                track.style.transition = animate ? 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
-                currentTranslate = currentIndex * -slideWidth;
-                track.style.transform = `translate3d(${currentTranslate}px, 0, 0)`; 
-                
-                let activeDotIndex = currentIndex - 1;
-                if (currentIndex === 0) activeDotIndex = originalSlides.length - 1;
-                if (currentIndex === allSlides.length - 1) activeDotIndex = 0;
-                
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('bg-navy-900', index === activeDotIndex);
-                    dot.classList.toggle('bg-gray-200', index !== activeDotIndex);
-                });
-            };
+function paint(u,s){
+  gsap.to(M.upper.color,{...new THREE.Color(u),duration:1});
+  gsap.to(M.mid.color,{...new THREE.Color(s),duration:1});
+}
 
-            updatePosition(false);
-
-            track.addEventListener('transitionend', () => {
-                if (allSlides[currentIndex].id === 'first-clone') { currentIndex = 1; updatePosition(false); }
-                if (allSlides[currentIndex].id === 'last-clone') { currentIndex = originalSlides.length; updatePosition(false); }
-            });
-
-            const startAutoPlay = () => {
-                clearInterval(autoPlayInterval);
-                autoPlayInterval = setInterval(() => {
-                    if(!document.hidden){
-                        currentIndex++;
-                        updatePosition(true);
-                    }
-                }, 3000);
-            };
-
-            document.addEventListener("visibilitychange", () => {
-                if (document.hidden) {
-                    clearInterval(autoPlayInterval);
-                } else {
-                    startAutoPlay();
-                }
-            });
-
-            const touchStart = (event) => {
-                clearInterval(autoPlayInterval);
-                
-                if (currentIndex === 0) {
-                    currentIndex = originalSlides.length;
-                    updatePosition(false);
-                } else if (currentIndex === allSlides.length - 1) {
-                    currentIndex = 1;
-                    updatePosition(false);
-                }
-
-                isDragging = true;
-                isScrolling = false; 
-                
-                startPosX = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-                startPosY = event.type.includes('mouse') ? event.pageY : event.touches[0].clientY;
-                
-                currentTranslate = currentIndex * -allSlides[0].offsetWidth; 
-                prevTranslate = currentTranslate;
-                
-                track.style.transition = 'none'; 
-                track.classList.add('grabbing');
-                animationID = requestAnimationFrame(animation);
-            };
-
-            const touchMove = (event) => {
-                if (!isDragging) return;
-                
-                const currentPosX = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-                const currentPosY = event.type.includes('mouse') ? event.pageY : event.touches[0].clientY;
-                
-                const diffX = currentPosX - startPosX;
-                const diffY = currentPosY - startPosY;
-
-                if (!isScrolling) {
-                    if (Math.abs(diffY) > Math.abs(diffX)) {
-                        isScrolling = true;
-                        isDragging = false;
-                        track.classList.remove('grabbing');
-                        cancelAnimationFrame(animationID);
-                        return;
-                    }
-                }
-
-                if (!isScrolling) {
-                    currentTranslate = prevTranslate + diffX;
-                }
-            };
-
-            const touchEnd = () => {
-                if (!isDragging && !isScrolling) {
-                    startAutoPlay();
-                    return;
-                }
-                
-                if (isDragging) {
-                    isDragging = false;
-                    cancelAnimationFrame(animationID);
-                    track.classList.remove('grabbing');
-
-                    const movedBy = currentTranslate - prevTranslate;
-
-                    if (movedBy < -30) currentIndex++;
-                    else if (movedBy > 30) currentIndex--;
-
-                    updatePosition(true);
-                }
-                startAutoPlay();
-            };
-
-            const animation = () => {
-                track.style.transform = `translate3d(${currentTranslate}px, 0, 0)`;
-                if (isDragging) requestAnimationFrame(animation);
-            };
-
-            track.addEventListener('touchstart', touchStart, { passive: true });
-            track.addEventListener('touchmove', touchMove, { passive: true });
-            track.addEventListener('touchend', touchEnd);
-            
-            track.addEventListener('mousedown', touchStart);
-            track.addEventListener('mousemove', touchMove);
-            track.addEventListener('mouseup', touchEnd);
-            track.addEventListener('mouseleave', () => {
-                if(isDragging) touchEnd();
-                startAutoPlay();
-            });
-
-            let resizeTimer;
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(() => {
-                    updatePosition(false);
-                }, 100);
-            });
-
-            startAutoPlay();
-
-            // 6. Insight Cards Two-Tap Logic
-            const insightCards = document.querySelectorAll('.insight-card');
-            insightCards.forEach(card => {
-                card.addEventListener('click', function(e) {
-                    if (!this.classList.contains('hover-activated')) {
-                        e.preventDefault(); 
-                        insightCards.forEach(c => c.classList.remove('hover-activated'));
-                        this.classList.add('hover-activated');
-                    }
-                });
-            });
-
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.insight-card')) {
-                    insightCards.forEach(c => c.classList.remove('hover-activated'));
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+/* ---- scroll-driven state ---- */
+const S = {x:0,y:0,rx:.25,ry:-.6,rz:0,scale:1,explode:0,opacity:1};
+const pose = id => {
+  const m=isMobile();
+  return {
+    hero:   {x:m?0:2.3, y:m?1.5:.1, ry:-.6, rx:.25, scale:m?.62:1, explode:0, opacity:1},
+    p0:     {x:m?0:2.6, y:m?1.9:0, ry:.5, rx:.3, scale:m?.6:.95, explode:0, opacity:1},
